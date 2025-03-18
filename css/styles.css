@@ -44,12 +44,7 @@ nav a {
     letter-spacing: 1px;
 }
 
-body:has(nav a:hover) nav a:not(.emerging-menu a):not(.main-group a) {
-    opacity: 0.3;
-}
-
 body:has(nav a:hover) nav a:hover:not(.emerging-menu a):not(.main-group a) {
-    opacity: 1;
     background-color: #DBDBDB;
 }
 
@@ -238,17 +233,17 @@ body:has(.cash-link:hover) .cash-card {
 
 .main-group a,
 .emerging-menu a {
-    opacity: 1;
+    color: black;
 }
 
 /* Update hover states to treat all items as one group */
 body:has(nav a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
-    opacity: 0.3;
+    /* opacity: 0.3; */
 }
 
 body:has(.main-group a:hover) nav a:not(.main-group a):not(.emerging-menu a),
 body:has(.emerging-menu a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
-    opacity: 0.3;
+    /* opacity: 0.3; */
 }
 
 /* Keep all group items at full opacity when any is hovered */
@@ -256,7 +251,7 @@ body:has(.main-group a:hover) .main-group a,
 body:has(.main-group a:hover) .emerging-menu a,
 body:has(.emerging-menu a:hover) .main-group a,
 body:has(.emerging-menu a:hover) .emerging-menu a {
-    opacity: 1 !important;
+    color: black;
 }
 
 .emerging-menu {
@@ -264,27 +259,53 @@ body:has(.emerging-menu a:hover) .emerging-menu a {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    display: none;
+    display: flex !important;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
     z-index: 1;
-    padding: 3px 15px;
+    padding: 3px 0;
     border-radius: 100px;
     background-color: #EDEDED;
-    width: fit-content;
+    width: 0;
     height: 28px;
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    opacity: 0;
+}
+
+.emerging-container.active .emerging-menu {
+    width: fit-content;
+    opacity: 1;
 }
 
 .emerging-menu a {
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 3px 5px;
     height: 28px;
     display: flex;
     align-items: center;
     letter-spacing: 1px;
     background-color: transparent;
+    transform: translateX(-30px);
+    visibility: hidden;
+}
+
+.emerging-container.active .emerging-menu a {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.emerging-container.active .emerging-menu a:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.emerging-container.active .emerging-menu a:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.emerging-container.active .emerging-menu a:nth-child(3) {
+    transition-delay: 0.3s;
 }
 
 body:has(.emerging-container.active) .emerging-menu a {
@@ -292,7 +313,13 @@ body:has(.emerging-container.active) .emerging-menu a {
 }
 
 body:has(.emerging-container.active) .emerging-menu a:first-child {
-    margin-left: 2rem;
+    padding-left: 15px;
+    margin-left: 0;
+}
+
+body:has(.emerging-container.active) .emerging-menu a:last-child {
+    margin-right: 0;
+    padding-right: 15px;
 }
 
 /* Remove any competing hover states */
@@ -337,7 +364,7 @@ body:has(nav a:hover:not(.main-group a)) .main-group a {
 }
 
 body:has(.main-group a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
-    opacity: 0.3;
+    /* opacity: 0.3; */
 }
 
 body:has(.main-group a:hover) .main-group a {
@@ -345,7 +372,8 @@ body:has(.main-group a:hover) .main-group a {
 }
 
 .emerging-menu a:last-child {
-    margin-right: 2px;
+    margin-right: 0;
+    padding-right: 15px;
 }
 
 .emerging-menu a:not(:first-child) {
