@@ -1,0 +1,390 @@
+@font-face {
+    font-family: 'Cash Sans';
+    src: url('../fonts/CashSans-Regular.woff2') format('woff2'),
+         url('../fonts/CashSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cash Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+nav {
+    padding: 2rem;
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    position: relative;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    padding: 3px 15px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+}
+
+body:has(nav a:hover) nav a:not(.emerging-menu a):not(.main-group a) {
+    opacity: 0.3;
+}
+
+body:has(nav a:hover) nav a:hover:not(.emerging-menu a):not(.main-group a) {
+    opacity: 1;
+    background-color: #DBDBDB;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.logo-text {
+    position: relative;
+    display: inline-flex;
+}
+
+.static-text {
+    display: inline-block;
+}
+
+.typing-text {
+    position: relative;
+    display: inline-block;
+    max-width: 0;
+    overflow: hidden;
+    margin-left: 0.05em;
+}
+
+.typing-text::before {
+    content: attr(data-text);
+    white-space: nowrap;
+    position: relative;
+    display: inline-block;
+}
+
+.logo-text:hover .typing-text {
+    max-width: 1000px;
+    transition: max-width 2.5s steps(50, end);
+}
+
+.typing-text::after {
+    content: '|';
+    position: absolute;
+    right: -2px;
+    top: 0;
+    color: black;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+.bottom-nav ul {
+    position: relative;
+}
+
+.cash-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+}
+
+.cash-card img {
+    width: 380px;
+    height: auto;
+    display: block;
+}
+
+.cash-link:hover ~ .cash-card {
+    display: block;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+body:has(.cash-link:hover) .logo-text .static-text,
+body:has(.cash-link:hover) .logo-text .typing-text,
+body:has(.cash-link:hover) .logo-text .closing-brace {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body:has(.cash-link:hover) .cash-card {
+    display: block;
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.98);
+    }
+    to { 
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.emerging-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.emerging-container > a {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 15px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    height: 28px;
+    width: 115px;
+    justify-content: center;
+}
+
+.emerging-container > a::after {
+    content: ' +';
+    display: inline-block;
+    margin-left: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.emerging-container:hover > a {
+    opacity: 1;
+    background-color: #DBDBDB;
+    border-radius: 100px;
+    width: 115px;
+}
+
+.emerging-container > a:hover {
+    background-color: #DBDBDB;
+}
+
+.emerging-container.active > a {
+    background-color: #DBDBDB;
+    width: 115px;
+    z-index: 4;
+}
+
+.emerging-container.active > a::after {
+    content: ' -';
+}
+
+.emerging-container.active .emerging-menu {
+    display: flex !important;
+    position: absolute;
+    left: calc(100% + 1rem);
+    transform: none;
+    top: 0;
+}
+
+.main-group {
+    display: flex;
+    gap: 3rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.main-group a,
+.emerging-menu a {
+    opacity: 1;
+}
+
+/* Update hover states to treat all items as one group */
+body:has(nav a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
+    opacity: 0.3;
+}
+
+body:has(.main-group a:hover) nav a:not(.main-group a):not(.emerging-menu a),
+body:has(.emerging-menu a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
+    opacity: 0.3;
+}
+
+/* Keep all group items at full opacity when any is hovered */
+body:has(.main-group a:hover) .main-group a,
+body:has(.main-group a:hover) .emerging-menu a,
+body:has(.emerging-menu a:hover) .main-group a,
+body:has(.emerging-menu a:hover) .emerging-menu a {
+    opacity: 1 !important;
+}
+
+.emerging-menu {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    z-index: 1;
+    padding: 3px 15px;
+    border-radius: 100px;
+    background-color: #EDEDED;
+    width: fit-content;
+    height: 28px;
+    transition: all 0.3s ease;
+}
+
+.emerging-menu a {
+    transition: all 0.3s ease;
+    padding: 3px 5px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    background-color: transparent;
+}
+
+body:has(.emerging-container.active) .emerging-menu a {
+    margin-left: 3rem;
+}
+
+body:has(.emerging-container.active) .emerging-menu a:first-child {
+    margin-left: 2rem;
+}
+
+/* Remove any competing hover states */
+.emerging-menu a:hover {
+    letter-spacing: 1px;
+    background-color: transparent !important;
+}
+
+.closing-brace {
+    display: inline-block;
+    transition: opacity 0.1s ease;
+}
+
+.logo-text:hover .closing-brace {
+    opacity: 1;
+}
+
+.logo-text:hover .typing-text:not([data-animating]) ~ .closing-brace {
+    opacity: 1;
+    transition: opacity 0.1s ease 2.5s;
+}
+
+.bottom-nav a {
+    letter-spacing: 1px;
+}
+
+body:has(.emerging-container.active) .main-group {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+}
+
+body:has(nav a:hover) .main-group a {
+    opacity: 1;
+}
+
+body:has(nav a:hover:not(.main-group a)) .main-group a {
+    opacity: 0.3;
+}
+
+body:has(.main-group a:hover) nav a:not(.main-group a):not(.emerging-menu a) {
+    opacity: 0.3;
+}
+
+body:has(.main-group a:hover) .main-group a {
+    opacity: 1;
+}
+
+.emerging-menu a:last-child {
+    margin-right: 2px;
+}
+
+.emerging-menu a:not(:first-child) {
+    margin-left: 3rem;
+}
+
+/* Ensure smooth transitions for the entire group */
+.main-group,
+.emerging-menu,
+.emerging-menu a,
+.main-group a {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure proper z-index stacking */
+.emerging-container.active {
+    position: relative;
+    z-index: 4;
+}
+
+body:has(.emerging-container.active) .emerging-menu {
+    position: relative;
+    left: 0;
+    top: 0;
+    transform: none;
+    margin-left: 3rem;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        font-size: 0.75rem;
+    }
+
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+} 
